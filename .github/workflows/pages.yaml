@@ -1,0 +1,68 @@
+# 构建站点并部署到 GitHub Pages。
+#
+# 站点是纯静态产物，不需要 Node.js —— 依赖只有 Hugo Extended 一个二进制。
+# 主题已随仓库交付在 themes/oink/，因此这里不需要 Go、也不会去拉 Hugo Module。
+#
+# baseURL 由 actions/configure-pages 自动推出（含项目页的 /maoxuan/ 子路径），
+# 这样同一个仓库部署到根域名或子路径都不会出错。
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          # 与本地验证过的版本一致（Hugo 最低要求 0.160.1，且必须是 extended）
+          hugo-version: '0.167.0'
+          extended: true
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          # 首次运行时尝试自动开启 Pages（Source = GitHub Actions）。
+          # 若权限不足，请在 Settings → Pages 里手动把 Source 设为 GitHub Actions。
+          enablement: true
+
+      - name: Build
+        run: |
+          hugo --gc --minify --printPathWarnings \
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

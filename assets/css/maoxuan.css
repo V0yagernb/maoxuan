@@ -7,20 +7,24 @@
 
 /* ---------------------------------------------------------------- 字体
    三份子集化 woff2，随站本地交付，可离线。授权 SIL OFL 1.1，
-   原文见 /fonts/OFL-NotoSerifSC.txt 与 /fonts/OFL-LXGWWenKai.txt。      */
+   原文见 ../fonts/OFL-NotoSerifSC.txt 与 ../fonts/OFL-LXGWWenKai.txt。
+
+   路径用相对式（../fonts/）：本样式表发布在 /css/ 下，
+   因此无论站点部署在根路径还是 /maoxuan/ 这类子路径下都能解析正确。
+   写成 /fonts/ 绝对路径会让子路径部署（GitHub Pages 项目页）下字体 404。 */
 @font-face {
   font-family: 'Maoxuan Serif';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/fonts/maoxuan-serif-400.woff2') format('woff2');
+  src: url('../fonts/maoxuan-serif-400.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Maoxuan Serif';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('/fonts/maoxuan-serif-600.woff2') format('woff2');
+  src: url('../fonts/maoxuan-serif-600.woff2') format('woff2');
 }
 /* 霞鹜文楷只有单一字重（400）。声明成区间，浏览器就不会再有"伪加粗"——
    伪粗会把楷体的笔锋糊成一块，是这套设计里最容易翻车的地方。 */
@@ -29,7 +33,7 @@
   font-style: normal;
   font-weight: 400 700;
   font-display: swap;
-  src: url('/fonts/maoxuan-kai-400.woff2') format('woff2');
+  src: url('../fonts/maoxuan-kai-400.woff2') format('woff2');
 }
 
 /* ------------------------------------------------------------ 纸与墨 */
