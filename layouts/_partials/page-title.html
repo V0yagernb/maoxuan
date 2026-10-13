@@ -1,0 +1,21 @@
+{{- /* 覆写主题的 page-title，只加一件事：
+       把标题里的注号变成与正文一致的可点击注号链接。
+
+       原书有 6 篇把注号标在标题里，例如「关于国际新形势对新华日报⑴记者的谈话」
+       —— ⑴ 指的是文末注释〔1〕。标题进 front matter 后是纯文本，无法内嵌链接，
+       所以在这个渲染点统一改写。正文中的注号由 tools/convert.py 直接写成
+       Markdown 链接，不经过这里。
+
+       主题原实现见 themes/oink/layouts/_partials/page-title.html。 */ -}}
+{{- $map := dict
+  "⑴" 1 "⑵" 2 "⑶" 3 "⑷" 4 "⑸" 5 "⑹" 6 "⑺" 7 "⑻" 8 "⑼" 9 "⑽" 10
+  "⑾" 11 "⑿" 12 "⒀" 13 "⒁" 14 "⒂" 15 "⒃" 16 "⒄" 17 "⒅" 18 "⒆" 19 "⒇" 20 -}}
+{{- $title := .Title -}}
+{{- range $ch, $n := $map -}}
+  {{- if in $title $ch -}}
+    {{- $title = replace $title $ch (printf `<a class="mx-title-note" href="#note-%d">%s</a>` $n $ch) -}}
+  {{- end -}}
+{{- end -}}
+<div class="td-page-heading">
+  <h1>{{ if eq .Type "book" }}{{ with .Params.book_number }}<span class="td-book-number">{{ . }}</span> {{ end }}{{ end }}{{ $title | safeHTML }}</h1>
+</div>

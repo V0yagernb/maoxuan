@@ -1,0 +1,90 @@
+sections: [hero, cards, {type: cards, key: cards2}, markdown, cta]
+
+hero:
+  align: center
+  eyebrow: 一九二五 — 一九五七
+  title_size: 4rem
+  title_lines:
+    - words: [{ text: 毛泽东选集 }]
+  lead: 星星之火，可以燎原。第一至五卷，二百二十九篇；原文未经删改，原书注释照录。
+  actions:
+    - { label: 开始阅读, url: book/, icon: fa-solid fa-book-open, style: primary }
+    - { label: 名篇选读, url: book/volume-1/005/, icon: fa-solid fa-bookmark, style: ghost }
+
+cards:
+  eyebrow: 卷次
+  title: 五卷二百二十九篇
+  desc: 依原书编次，自第一次国内革命战争时期起，至一九五七年止。
+  columns: 3
+  link_label: 阅读
+  items:
+    - title: 第一卷
+      meta: 国内革命战争时期
+      desc: 一九二五至一九三七年 · 十八篇
+      icon: fa-solid fa-book
+      url: book/volume-1/
+    - title: 第二卷
+      meta: 抗日战争时期（上）
+      desc: 一九三七至一九四一年 · 四十篇
+      icon: fa-solid fa-book
+      url: book/volume-2/
+    - title: 第三卷
+      meta: 抗日战争时期（下）
+      desc: 一九四一至一九四五年 · 三十一篇
+      icon: fa-solid fa-book
+      url: book/volume-3/
+    - title: 第四卷
+      meta: 第三次国内革命战争时期
+      desc: 一九四五至一九四九年 · 七十篇
+      icon: fa-solid fa-book
+      url: book/volume-4/
+    - title: 第五卷
+      meta: 中国人民站起来了
+      desc: 一九四九至一九五七年 · 七十篇
+      icon: fa-solid fa-book
+      url: book/volume-5/
+
+cards2:
+  eyebrow: 名篇选读
+  title: 从这四篇入手
+  desc: 均为第一卷已录入篇目，可径直读下去。
+  columns: 4
+  link_label: 阅读
+  items:
+    - title: 中国社会各阶级的分析
+      meta: 一九二五年十二月一日
+      desc: 谁是我们的敌人？谁是我们的朋友？这个问题是革命的首要问题。
+      icon: fa-solid fa-compass
+      url: book/volume-1/000/
+    - title: 湖南农民运动考察报告
+      meta: 一九二七年三月
+      desc: 没有调查，没有发言权；农民运动的十四件大事。
+      icon: fa-solid fa-seedling
+      url: book/volume-1/001/
+    - title: 星星之火，可以燎原
+      meta: 一九三○年一月五日
+      desc: 星星之火，可以燎原——对革命前途的估计。
+      icon: fa-solid fa-fire
+      url: book/volume-1/005/
+    - title: 反对本本主义
+      meta: 一九三○年五月
+      desc: 调查就像十月怀胎，解决问题就像一朝分娩。
+      icon: fa-solid fa-magnifying-glass
+      url: book/volume-1/006/
+
+markdown:
+  eyebrow: 名句
+  title: 开卷数语
+  body: |
+    > 没有调查，没有发言权。 ——《反对本本主义》
+
+    > 我们都是来自五湖四海，为了一个共同的革命目标，走到一起来了。 ——《为人民服务》
+
+    > 下定决心，不怕牺牲，排除万难，去争取胜利。 ——《愚公移山》
+
+cta:
+  title: 从第一卷第一篇读起
+  text: 二百二十九篇，按历史次序排列；每篇之后照录原书注释，可点击正文圈号直达。
+  label: 开始阅读
+  url: book/volume-1/000/
+  style: primary

@@ -1,0 +1,16 @@
+{{/* 站点自定义样式表。
+     主题在 layouts/_partials/head-css.html 里输出主样式（Bootstrap + OINK shell），
+     本钩子在 <head> 末尾，因此顺序在主题样式之后。但本站的覆写并不依赖这个顺序：
+     选择器统一用 html[data-td-preset='paper']（优先级 0,1,1），
+     高于主题预设的 [data-td-preset='paper']（0,1,0）。 */}}
+{{- with resources.Get "css/maoxuan.css" -}}
+  {{- $css := . -}}
+  {{- if hugo.IsProduction -}}
+    {{- $css = $css | minify | fingerprint -}}
+  {{- end -}}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}"
+  {{- with $css.Data.Integrity }} integrity="{{ . }}" crossorigin="anonymous"{{ end -}}
+  >
+{{- else -}}
+  {{- warnf "assets/css/maoxuan.css 未找到；站点将缺少字体声明与纪念馆风覆写" -}}
+{{- end -}}

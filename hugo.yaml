@@ -1,0 +1,92 @@
+# 《毛泽东选集》阅读站 —— 站点配置
+# 主题：OINK v1.2.0（Apache-2.0），以 themes/ 目录方式挂载，不依赖 Go 与 npm。
+
+title: 毛泽东选集
+baseURL: http://localhost:1313/
+defaultContentLanguage: zh
+enableGitInfo: false
+enableRobotsTXT: true
+enableEmoji: false
+timeZone: Asia/Shanghai
+
+theme: oink
+
+languages:
+  zh:
+    label: 简体中文
+    locale: zh-CN
+    weight: 1
+    title: 毛泽东选集
+    hasCJKLanguage: true
+    params:
+      description: 《毛泽东选集》第一至五卷全文阅读。原文未经删改，注释照录原书。
+
+# OINK 的 Markdown 组件依赖这三个 Goldmark 设置，缺一不可。
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+    parser:
+      attribute:
+        block: true
+      wrapStandAloneImageWithinParagraph: false
+  highlight:
+    noClasses: false
+
+outputs:
+  home: [HTML, RSS, markdown, LLMS]
+  page: [HTML, markdown]
+  section: [HTML, RSS, print, markdown]
+
+params:
+  offline_search: true
+  copyright:
+    authors: 非官方公益阅读版
+    from_year: 2026
+  footer_center_info: 本站为《毛泽东选集》的非官方公益阅读版，文本整理自公开资料，仅供学习研究之用。
+
+  ui:
+    # 纪念馆/档案风：暖白宣纸底 + 深墨字，深色模式会冲淡这套气质，故暂不开启。
+    dark_mode: false
+    preset: paper
+
+    # 站点主题色：绛红。只作点睛——标题装饰、当前项、链接。
+    theme_color: '#8C1D18'
+
+    # 字体：主题只认字体名、从不自己加载字体文件，
+    # 所以这里引用的三款字体由本站的 assets/css/maoxuan.css 用 @font-face 声明。
+    # 标题走思源宋体（有 400/600 两个字重，加粗真实）；
+    # 霞鹜文楷只有单一字重，只留给站名、hero 主标题与引文，并强制 400 避免伪加粗。
+    typography: technical
+    fonts:
+      ui: "'Maoxuan Serif', 'Source Han Serif SC', 'Noto Serif SC', 'Songti SC', SimSun, serif"
+      body: "'Maoxuan Serif', 'Source Han Serif SC', 'Songti SC', SimSun, serif"
+      heading: "'Maoxuan Serif', 'Songti SC', SimSun, serif"
+      display: "'Maoxuan Kai', 'Maoxuan Serif', 'Songti SC', serif"
+      brand: "'Maoxuan Kai', 'Maoxuan Serif', 'Songti SC', serif"
+      meta: "'Maoxuan Serif', 'Songti SC', SimSun, serif"
+      print: "'Maoxuan Serif', SimSun, serif"
+
+    section_index: cards
+    section_index_columns: 2
+    sidebar_menu_foldable: true
+    sidebar_menu_compact: false
+    sidebar_icon_policy: groups
+    sidebar_headings: false
+    sidebar_root_enabled: true
+    # 根切换器是给"多个并列区块"的站点用的；本站只有一个根（选集），
+    # 开着它就会在侧栏顶部多出一行与树根重复的「选集」。关掉。
+    sidebar_root_menu: false
+    sidebar_expand_levels: 2
+    backlinks: false
+    pager_types: [book]
+    book_draft_banner: false
+    toc_style: fixed
+    toc_taxonomies: false
+    share: []
+    feedback:
+      enable: false
+      reasons: false
+    page_context_menu:
+      enable: true
+      assistant_links: false

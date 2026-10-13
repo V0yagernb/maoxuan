@@ -1,0 +1,404 @@
+/* ============================================================================
+   《毛泽东选集》阅读站 —— 站点视觉层
+   基调：纪念馆 / 档案风。宣纸暖白为底，深墨为字，朱红只作点睛（面积 < 5%）。
+   覆写 OINK 的 paper 预设：选择器用 html[data-td-preset='paper']（优先级 0,1,1），
+   高于主题预设的 [data-td-preset='paper']（0,1,0），因此不依赖样式表加载顺序。
+   ============================================================================ */
+
+/* ---------------------------------------------------------------- 字体
+   三份子集化 woff2，随站本地交付，可离线。授权 SIL OFL 1.1，
+   原文见 /fonts/OFL-NotoSerifSC.txt 与 /fonts/OFL-LXGWWenKai.txt。      */
+@font-face {
+  font-family: 'Maoxuan Serif';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/maoxuan-serif-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Maoxuan Serif';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/maoxuan-serif-600.woff2') format('woff2');
+}
+/* 霞鹜文楷只有单一字重（400）。声明成区间，浏览器就不会再有"伪加粗"——
+   伪粗会把楷体的笔锋糊成一块，是这套设计里最容易翻车的地方。 */
+@font-face {
+  font-family: 'Maoxuan Kai';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/maoxuan-kai-400.woff2') format('woff2');
+}
+
+/* ------------------------------------------------------------ 纸与墨 */
+html[data-td-preset='paper'] {
+  --mx-paper: #f7f3e9;
+  --mx-paper-deep: #f1eadc;
+  --mx-paper-high: #fdfbf6;
+  --mx-ink: #221e19;
+  --mx-ink-mid: #574f45;
+  --mx-ink-faint: #8b8274;
+  --mx-vermilion: #8c1d18;
+  --mx-vermilion-deep: #6e1611;
+  --mx-rule: rgba(34, 30, 25, 0.13);
+
+  --bs-body-bg: var(--mx-paper);
+  --bs-body-bg-rgb: 247, 243, 233;
+  --bs-body-color: var(--mx-ink);
+  --bs-body-color-rgb: 34, 30, 25;
+  --bs-emphasis-color: #1a1713;
+  --bs-emphasis-color-rgb: 26, 23, 19;
+  --bs-secondary-color: var(--mx-ink-mid);
+  --bs-secondary-color-rgb: 87, 79, 69;
+  --bs-tertiary-color: var(--mx-ink-faint);
+  --bs-tertiary-color-rgb: 139, 130, 116;
+  --bs-secondary-bg: var(--mx-paper-deep);
+  --bs-secondary-bg-rgb: 241, 234, 220;
+  --bs-tertiary-bg: var(--mx-paper-high);
+  --bs-tertiary-bg-rgb: 253, 251, 246;
+  --bs-border-color: var(--mx-rule);
+  --bs-border-color-translucent: var(--mx-rule);
+
+  --bs-link-color: var(--mx-vermilion);
+  --bs-link-color-rgb: 140, 29, 24;
+  --bs-link-hover-color: var(--mx-vermilion-deep);
+  --bs-link-hover-color-rgb: 110, 22, 17;
+
+  --bs-code-color: #211e19;
+  --td-code-inline-bg: rgba(34, 30, 25, 0.055);
+  --td-code-strong-fg: #1a1713;
+  --td-code-header-bg: #f2ede1;
+  --td-pre-bg: #fffdf8;
+
+  --td-brand-header-bg: rgba(247, 243, 233, 0.9);
+  --td-brand-elev: #fffdf8;
+  --td-brand-silk: var(--mx-ink-faint);
+  --td-brand-copper: var(--mx-vermilion);
+  --td-brand-copper-dim: rgba(140, 29, 24, 0.42);
+  --td-brand-line-strong: rgba(34, 30, 25, 0.24);
+  --td-brand-shadow-sm: 0 1px 3px rgba(34, 30, 25, 0.05);
+  --td-brand-shadow-md: 0 12px 34px rgba(34, 30, 25, 0.1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ------------------------------------------------------------ 正文版式 */
+html[data-td-preset='paper'] .td-content {
+  font-size: 1.0625rem;
+  line-height: 1.9;
+}
+
+html[data-td-preset='paper'] .td-content > p {
+  text-indent: 2em;
+  text-align: justify;
+  text-justify: inter-ideograph;
+  margin-block: 0 0.85em;
+}
+
+/* 篇名下的纪年：居中、疏字距、楷体、浅墨 —— 铭牌质感 */
+html[data-td-preset='paper'] .td-content > p.mx-date {
+  text-indent: 0;
+  text-align: center;
+  font-family: 'Maoxuan Kai', 'Maoxuan Serif', 'Songti SC', serif;
+  font-size: 0.9375rem;
+  letter-spacing: 0.22em;
+  color: var(--mx-ink-faint);
+  margin: 0.35rem 0 2rem;
+}
+
+/* 编者按：朱红细线 + 浅底，明确区别于正文 */
+html[data-td-preset='paper'] .td-content blockquote {
+  margin: 0 0 2.25rem;
+  padding: 1.1rem 1.4rem;
+  border: 0;
+  border-inline-start: 3px solid var(--mx-vermilion);
+  background: var(--mx-paper-deep);
+  color: var(--mx-ink-mid);
+  font-size: 0.9375rem;
+  line-height: 1.85;
+}
+html[data-td-preset='paper'] .td-content blockquote p {
+  margin-block: 0;
+  text-indent: 0;
+  text-align: justify;
+  text-justify: inter-ideograph;
+}
+
+/* 篇内小标题、页面主标题：思源宋体 600 —— 加粗是真实的，不是伪粗 */
+html[data-td-preset='paper'] .td-content h2 {
+  margin-top: 3rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid var(--mx-rule);
+  font-size: 1.1875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+/* 页面主标题 */
+html[data-td-preset='paper'] .td-page-heading h1 {
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.42;
+}
+
+/* 楷体元素一律 400：站名、hero 主标题、区块标题、引文 */
+html[data-td-preset='paper'] .td-nav-brand,
+html[data-td-preset='paper'] .td-landing-hero__title,
+html[data-td-preset='paper'] .td-landing-section__head h2,
+html[data-td-preset='paper'] .td-landing-markdown blockquote,
+html[data-td-preset='paper'] .td-landing-hero__lead {
+  font-weight: 400;
+}
+
+/* --------------------------------------------------- 注释圈号（正文内） */
+html[data-td-preset='paper'] .td-content a[href^='#note-'] {
+  padding: 0 0.06em;
+  font-family: 'Maoxuan Serif', 'Songti SC', serif;
+  font-size: 0.8em;
+  line-height: 0;
+  vertical-align: 0.38em;
+  color: var(--mx-vermilion);
+  text-decoration: none;
+}
+html[data-td-preset='paper'] .td-content a[href^='#note-']:hover {
+  color: var(--mx-vermilion-deep);
+  text-decoration: underline;
+}
+
+/* 标题内的注号（原书有 6 篇把注号标在篇名里），与正文注号同一套观感 */
+html[data-td-preset='paper'] .td-page-heading .mx-title-note {
+  padding: 0 0.06em;
+  font-family: 'Maoxuan Serif', 'Songti SC', serif;
+  font-size: 0.6em;
+  font-weight: 400;
+  line-height: 0;
+  vertical-align: 0.62em;
+  color: var(--mx-vermilion);
+  text-decoration: none;
+}
+html[data-td-preset='paper'] .td-page-heading .mx-title-note:hover {
+  color: var(--mx-vermilion-deep);
+  text-decoration: underline;
+}
+
+/* ------------------------------------------------------------ 注释区 */
+html[data-td-preset='paper'] .mx-notes-heading {
+  text-indent: 0;
+  margin: 3.25rem 0 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--mx-rule);
+  font-family: 'Maoxuan Serif', 'Songti SC', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.4em;
+  color: var(--mx-ink-mid);
+}
+
+html[data-td-preset='paper'] .mx-notes {
+  columns: 1;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: var(--mx-ink-mid);
+}
+
+/* 两栏小字疏排：宽屏分栏，窄屏回落单栏 */
+@media (min-width: 992px) {
+  html[data-td-preset='paper'] .mx-notes {
+    columns: 2;
+    column-gap: 2.75rem;
+    column-rule: 1px solid var(--mx-rule);
+  }
+}
+
+html[data-td-preset='paper'] .mx-note {
+  break-inside: avoid;
+  padding-inline-start: 2.7em;
+  text-indent: -2.7em;
+  text-align: justify;
+  text-justify: inter-ideograph;
+  margin: 0 0 0.75rem;
+}
+html[data-td-preset='paper'] .mx-note-num {
+  color: var(--mx-vermilion);
+  font-family: 'Maoxuan Serif', 'Songti SC', serif;
+}
+html[data-td-preset='paper'] .mx-note:target {
+  background: rgba(140, 29, 24, 0.07);
+  border-radius: 3px;
+}
+
+/* 出处行 */
+html[data-td-preset='paper'] .td-content > p.mx-source {
+  text-indent: 0;
+  margin-top: 2.25rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--mx-rule);
+  font-size: 0.8125rem;
+  color: var(--mx-ink-faint);
+}
+
+/* ------------------------------------------------------------ 首页 */
+/* hero 的彩色光晕与档案风不合，压掉 */
+html[data-td-preset='paper'] .td-landing-hero__glow {
+  display: none;
+}
+
+/* 那个绿色脉冲状态点是"在线服务"的语汇，与纪念馆风冲突，去掉 */
+html[data-td-preset='paper'] .td-landing-status-dot {
+  display: none;
+}
+
+html[data-td-preset='paper'] .td-landing-hero__eyebrow {
+  letter-spacing: 0.28em;
+  color: var(--mx-ink-faint);
+}
+
+html[data-td-preset='paper'] .td-landing-hero__title {
+  font-family: 'Maoxuan Kai', 'Maoxuan Serif', 'Songti SC', serif;
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+}
+
+/* 站名下一道朱红细线 —— 全站唯一的强装饰 */
+html[data-td-preset='paper'] .td-landing-hero__title::after {
+  content: '';
+  display: block;
+  width: 3.25rem;
+  height: 2px;
+  margin: 1.35rem auto 0;
+  background: var(--mx-vermilion);
+}
+
+html[data-td-preset='paper'] .td-landing-hero__lead {
+  max-width: 34em;
+  margin-inline: auto;
+  color: var(--mx-ink-mid);
+  letter-spacing: 0.02em;
+}
+
+html[data-td-preset='paper'] .td-landing-hero__actions {
+  justify-content: center;
+}
+
+/* 区块标题：与正文同一套语气 */
+html[data-td-preset='paper'] .td-landing-section__head h2 {
+  font-weight: 500;
+  letter-spacing: 0.07em;
+}
+html[data-td-preset='paper'] .td-landing-section__eyebrow {
+  letter-spacing: 0.3em;
+  color: var(--mx-ink-faint);
+}
+html[data-td-preset='paper'] .td-landing-section__description {
+  color: var(--mx-ink-mid);
+}
+
+/* 卡片：去掉浮影，只留细边与纸面 */
+html[data-td-preset='paper'] .td-landing-card {
+  border: 1px solid var(--mx-rule);
+  border-radius: 4px;
+  background: var(--mx-paper-high);
+  box-shadow: none;
+}
+html[data-td-preset='paper'] .td-landing-card:hover {
+  border-color: rgba(140, 29, 24, 0.4);
+  box-shadow: none;
+}
+html[data-td-preset='paper'] .td-landing-card__meta {
+  letter-spacing: 0.16em;
+  font-size: 0.75rem;
+  color: var(--mx-ink-faint);
+}
+html[data-td-preset='paper'] .td-landing-card h3 {
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* 卷首装饰线 */
+html[data-td-preset='paper'] .mx-orn {
+  width: 2.5rem;
+  height: 0;
+  margin: 2rem 0;
+  border-top: 2px solid var(--mx-vermilion);
+}
+
+/* ------------------------------------------------------------ 目录
+   篇目与卷次目录：标题靠左、纪年靠右、中间点线引导 —— 纸本目录的正统排法。
+   默认的 description 行在书页上与正文首句重复，一并隐去。 */
+html[data-td-preset='paper'] .td-content > .lead {
+  display: none;
+}
+
+html[data-td-preset='paper'] .mx-toc {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  padding: 0;
+}
+html[data-td-preset='paper'] .mx-toc li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  padding: 0.5rem 0;
+}
+html[data-td-preset='paper'] .mx-toc li + li {
+  border-top: 1px solid var(--mx-rule);
+}
+html[data-td-preset='paper'] .mx-toc a {
+  min-width: 0;
+  color: var(--mx-ink);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+html[data-td-preset='paper'] .mx-toc a:hover {
+  color: var(--mx-vermilion);
+  text-decoration: underline;
+}
+html[data-td-preset='paper'] .mx-toc-dots {
+  flex: 1 1 auto;
+  align-self: end;
+  height: 0;
+  min-width: 1.5rem;
+  margin: 0 0.35rem 0.42em;
+  border-bottom: 1px dotted rgba(34, 30, 25, 0.32);
+}
+html[data-td-preset='paper'] .mx-toc-date {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  color: var(--mx-ink-faint);
+}
+
+/* 名句区 */
+html[data-td-preset='paper'] .td-landing-markdown blockquote {
+  margin: 0 0 1.75rem;
+  padding: 0 0 0 1.3rem;
+  border: 0;
+  border-inline-start: 2px solid var(--mx-vermilion);
+  background: none;
+  font-family: 'Maoxuan Kai', 'Maoxuan Serif', 'Songti SC', serif;
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  color: var(--mx-ink);
+}
+html[data-td-preset='paper'] .td-landing-markdown blockquote p {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------ 打印 */
+@media print {
+  html[data-td-preset='paper'] .mx-notes {
+    columns: 1;
+  }
+  html[data-td-preset='paper'] .td-landing-hero__title::after {
+    display: none;
+  }
+}
