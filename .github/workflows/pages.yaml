@@ -41,10 +41,11 @@ jobs:
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5
-        with:
-          # 首次运行时尝试自动开启 Pages（Source = GitHub Actions）。
-          # 若权限不足，请在 Settings → Pages 里手动把 Source 设为 GitHub Actions。
-          enablement: true
+        # 注意：这里刻意不设 enablement: true。
+        # 自动开启 Pages 需要仓库 admin 权限，而 Actions 默认的 GITHUB_TOKEN
+        # 拿不到（会以 "Resource not accessible by integration" 失败并拖垮整个 job）。
+        # 因此 Pages 需要在 Settings → Pages → Source 里手动选一次 GitHub Actions，
+        # 之后本工作流就能正常构建与部署。
 
       - name: Build
         run: |
